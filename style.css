@@ -1,0 +1,271 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 22%;
+    padding: 20px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.user-profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #b5bdcd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.user-role {
+    font-weight: 400;
+    color: #626d82;
+}
+
+.profile-wrapper {
+    display: flex;
+    gap: 15px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.active {
+    background-color: #d3f7b5;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.trouble-heading {
+    font-weight: 500;
+    color: #1f4451;
+    font-size: 24px;
+}
+
+.trouble-desc {
+    font-weight: 400;
+    color: #626d82;
+}
+
+.primary-btn {
+    width: 97px;
+    border-radius: 8px;
+    background-color: #1f4451;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.side-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.main {
+    width: 78%;
+    background-color: #f3f2f1;
+    padding: 30px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.main-top {
+    display: flex;
+    gap: 14px;
+}
+
+.home {
+    font-weight: 400;
+    font-size: 16px;
+    color: #436d7c;
+}
+
+.documents {
+    font-weight: 400;
+    color: #b5bdcd;
+}
+
+.main-center {
+    display: flex;
+    justify-content: space-between;
+}
+
+.center-document {
+    font-weight: 600;
+    font-size: 33px;
+    color: #2a2a2a;
+}
+
+.search-bar {
+    width: 307px;
+    height: 47px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    align-items: center;
+    padding: 15px;
+    border-radius: 5px;
+    border: 0.5px solid #b5bdcd;
+}
+
+.main-center input {
+    width: 240px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.main-center input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+}
+
+.main-center input::-ms-clear {
+    display: none;
+}
+
+.main-bottom {
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 0.5px solid #b5bdcd;
+}
+
+.doc-checkbox {
+    display: flex;
+    gap: 10px;
+}
+
+table {
+    background-color: #ffffff;
+    text-align: left;
+    min-width: 900px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-head {
+    font-weight: 600;
+    font-size: 16px;
+    color: #2a2a2a;
+}
+
+.table-body {
+    font-weight: 600;
+    font-size: 16px;
+    color: #436d7c;
+}
+
+td,
+th {
+    font-weight: 500;
+    font-size: 16px;
+    padding: 20px 20px;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 10;
+}
+
+tr {
+    border-bottom: 1px solid #e8ecf1;
+}
+
+.need-signing {
+    background-color: #436d7c;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 22px;
+    width: 139px;
+}
+
+.pending {
+    display: flex;
+    justify-content: center;
+    background-color: #e8ecf1;
+    color: #626d82;
+    padding: 6px 10px;
+    width: 85px;
+    border-radius: 22px;
+}
+
+.pending-primary {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.completed {
+    background-color: #d3f7b5;
+    color: #1f4451;
+    padding: 6px 10px;
+    border-radius: 22px;
+    width: 105px;
+}
+
+.btn-secondary {
+    width: 134px;
+    color: #626d82;
+    background-color: #ffffff;
+    border: 1px solid #b5bdcd;
+    border-radius: 5px;
+    padding: 9px;
+}
+
+.date {
+    color: #626d82;
+}
+
+.sign-now {
+    /* width: 134px; */
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
