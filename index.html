@@ -50,7 +50,9 @@
                 <div class="contact">
                     <img src="./assets/phone.svg" height="27px" width="27px" alt="phone-icon" />
                     <p class="trouble-heading">Having Trouble?</p>
-                    <p class="trouble-desc">Feel free to contact us and we will always help you through the process</p>
+                    <p class="trouble-desc">
+                        Feel free to contact us and we will always help you through the process
+                    </p>
                     <button class="primary-btn">Contact us</button>
                 </div>
             </div>
@@ -72,25 +74,28 @@
                             id="addDocumentBtn"
                         />
                         <div class="search-bar">
-                            <input type="search" placeholder="Search documents" />
+                            <input type="search" id="search-box" placeholder="Search documents" />
                             <img src="./assets/search-bar.svg" alt="search-bar-logo" />
                         </div>
                     </div>
                 </div>
                 <div class="main-bottom">
-                    <table id="documentTable">
-                        <tr>
-                            <th>
-                                <div class="doc-checkbox">
-                                    <input type="checkbox" />
-                                    <img src="./assets/down-arrow1.svg" alt="down-arrow" />
-                                </div>
-                            </th>
-                            <th class="table-head">Document Name</th>
-                            <th class="table-head">Status</th>
-                            <th class="table-head">Last Modified</th>
-                            <th></th>
-                        </tr>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="doc-checkbox">
+                                        <input type="checkbox" />
+                                        <img src="./assets/down-arrow1.svg" alt="down-arrow" />
+                                    </div>
+                                </th>
+                                <th class="table-head">Document Name</th>
+                                <th class="table-head">Status</th>
+                                <th class="table-head">Last Modified</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="document-table-body"> </tbody>
                     </table>
                 </div>
             </div>
