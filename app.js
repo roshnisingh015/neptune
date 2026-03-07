@@ -1,17 +1,42 @@
 const openBtn = document.getElementById("addDocumentBtn");
 const dialog = document.getElementById("addDocumentDialog");
 const closeBtn = document.getElementById("closeModalBtn");
-const closeIocn = document.getElementById("closeIcon");
+const closeIcon = document.getElementById("closeIcon");
 
 openBtn.addEventListener("click", () => {
     dialog.showModal();
 });
 
 closeBtn.addEventListener("click", () => {
+    const nameInput = document.querySelector('#addDocumentDialog input[type="text"]');
+    const statusInput = document.querySelector("#addDocumentDialog select");
+
+    const name = nameInput.value.trim();
+    const status = statusInput.value;
+
+    if (!name || !status) {
+        alert("Please fill in all fields");
+        return;
+    }
+
+    const newDoc = {
+        name: name,
+        status: status,
+        lastModified: getCurrentDateTime(),
+    };
+
+    documents = JSON.parse(localStorage.getItem("documents"));
+    documents.push(newDoc);
+    localStorage.setItem("documents", JSON.stringify(documents));
+    
+    nameInput.value = "";
+    statusInput.value = "";
+
     dialog.close();
+    renderTable();
 });
 
-closeIocn.addEventListener("click", () => {
+closeIcon.addEventListener("click", () => {
     dialog.close();
 });
 
@@ -80,5 +105,21 @@ searchInput.addEventListener("input", (e) => {
 
     renderTable(filterDocuments);
 });
+
+function getCurrentDateTime() {
+    const now = new Date();
+
+    const date = now.toLocaleDateString("en-US");
+
+    const time = now.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+    });
+
+    const [timePart, meridiem] = time.split(" ");
+
+    return `${date} ${timePart} ${meridiem.toLowerCase()}`;
+}
 
 renderTable();
