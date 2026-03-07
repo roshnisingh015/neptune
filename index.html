@@ -50,9 +50,7 @@
                 <div class="contact">
                     <img src="./assets/phone.svg" height="27px" width="27px" alt="phone-icon" />
                     <p class="trouble-heading">Having Trouble?</p>
-                    <p class="trouble-desc">
-                        Feel free to contact us and we will always help you through the process
-                    </p>
+                    <p class="trouble-desc">Feel free to contact us and we will always help you through the process</p>
                     <button class="primary-btn">Contact us</button>
                 </div>
             </div>
@@ -66,13 +64,21 @@
 
                 <div class="main-center">
                     <p class="center-document">My Documents</p>
-                    <div class="search-bar">
-                        <input type="search" placeholder="Search documents" />
-                        <img src="./assets/search-bar.svg" alt="search-bar-logo" />
+                    <div class="addLogo">
+                        <img
+                            src="./assets/add_document_button.png"
+                            alt="add-document-logo"
+                            class="add-document-btn"
+                            id="addDocumentBtn"
+                        />
+                        <div class="search-bar">
+                            <input type="search" placeholder="Search documents" />
+                            <img src="./assets/search-bar.svg" alt="search-bar-logo" />
+                        </div>
                     </div>
                 </div>
                 <div class="main-bottom">
-                    <table>
+                    <table id="documentTable">
                         <tr>
                             <th>
                                 <div class="doc-checkbox">
@@ -85,114 +91,36 @@
                             <th class="table-head">Last Modified</th>
                             <th></th>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td><span class="need-signing">Needs Signing</span></td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Sign now</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td>
-                                <div class="pending-primary">
-                                    <span class="pending">Pending</span>
-                                    <p>
-                                        <span style="color: #b5bdcd; font-style: italic"
-                                            >Waiting for</span
-                                        >
-                                        <span style="color: #436d7c; font-style: italic"
-                                            >1 Person</span
-                                        >
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Preview</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td>
-                                <div class="pending-primary">
-                                    <span class="pending">Pending</span>
-                                    <p>
-                                        <span style="color: #b5bdcd; font-style: italic">
-                                            Waiting for</span
-                                        ><span style="color: #436d7c; font-style: italic"
-                                            >2 People</span
-                                        >
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Preview</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td><span class="completed">Completed</span></td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Download PDF</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td>
-                                <span class="completed">Completed</span>
-                            </td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Download PDF</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td class="table-body">Title of Document Goes Here</td>
-                            <td>
-                                <span class="completed">Completed</span>
-                            </td>
-                            <td class="date">
-                                <p>10/22/2024</p>
-                                <p>2:01 pm</p>
-                            </td>
-                            <td class="sign-now">
-                                <button class="btn-secondary">Download PDF</button>
-                                <img src="./assets/3dot.svg" alt="3dots" />
-                            </td>
-                        </tr>
                     </table>
                 </div>
             </div>
         </div>
+
+        <dialog id="addDocumentDialog">
+            <img src="./assets/close-icon.png" alt="close-icon" class="close-icon" id="closeIcon" />
+
+            <div class="popup">
+                <h2>Add Document</h2>
+
+                <div>
+                    <label>Document Name</label>
+                    <input type="text" placeholder="Enter document name" />
+                </div>
+
+                <div>
+                    <label>Status</label>
+                    <select>
+                        <option value="">Select status</option>
+                        <option value="needs-signing">Needs Signing</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+
+                <button id="closeModalBtn" class="addBtn">Add</button>
+            </div>
+        </dialog>
+
+        <script src="./app.js"></script>
     </body>
 </html>
