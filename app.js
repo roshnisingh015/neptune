@@ -28,7 +28,7 @@ closeBtn.addEventListener("click", () => {
     documents = JSON.parse(localStorage.getItem("documents"));
     documents.push(newDoc);
     localStorage.setItem("documents", JSON.stringify(documents));
-    
+
     nameInput.value = "";
     statusInput.value = "";
 
@@ -58,13 +58,21 @@ function renderTable(documents) {
             <td class="date">${formatDateTime(doc.lastModified)}</td>
             <td class="sign-now">
                 <button class="btn-secondary">${getAction(doc.status)}</button>
-                <img src="./assets/3dot.svg" alt="3dots" />
+                <div class="action-wrapper">
+                    <img src="./assets/3dot.svg" alt="3dots" />
+                    <div class="kabab-menu">
+                        <button class="edit-btn" data-name="${doc.name}">Edit</button>
+                        <button class="delete-btn" data-name="${doc.name}">Delete</button>
+                    </div>
+                </div>
             </td>
         `;
 
         tableBody.appendChild(tr);
     });
 }
+
+renderTable();
 
 function getStatus(status) {
     if (status === "needs-signing") {
@@ -122,4 +130,16 @@ function getCurrentDateTime() {
     return `${date} ${timePart} ${meridiem.toLowerCase()}`;
 }
 
-renderTable();
+document.getElementById("document-table-body").addEventListener("click", (e) => {
+    const documents = JSON.parse(localStorage.getItem("documents")) || [];
+
+    if (e.target.classList.contains("delete-btn")) {
+        const name = e.target.dataset.name;
+
+        const remaining = documents.filter((doc) => doc.name !== name);
+
+        localStorage.setItem("documents", JSON.stringify(remaining));
+
+        renderTable();
+    }
+});
