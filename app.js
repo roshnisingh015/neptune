@@ -2,15 +2,20 @@ const openBtn = document.getElementById("addDocumentBtn");
 const dialog = document.getElementById("addDocumentDialog");
 const closeBtn = document.getElementById("closeModalBtn");
 const closeIcon = document.getElementById("closeIcon");
+const addDocumentHeading = document.getElementById("add-document-heading");
+const nameInput = document.querySelector('#addDocumentDialog input[type="text"]');
+const statusInput = document.querySelector("#addDocumentDialog select");
 
 openBtn.addEventListener("click", () => {
+    closeBtn.textContent = "Add";
+    addDocumentHeading.textContent = "Add Document";
+    nameInput.value = "";
+    statusInput.value = "";
+
     dialog.showModal();
 });
 
 closeBtn.addEventListener("click", () => {
-    const nameInput = document.querySelector('#addDocumentDialog input[type="text"]');
-    const statusInput = document.querySelector("#addDocumentDialog select");
-
     const name = nameInput.value.trim();
     const status = statusInput.value;
 
@@ -19,14 +24,27 @@ closeBtn.addEventListener("click", () => {
         return;
     }
 
-    const newDoc = {
-        name: name,
-        status: status,
-        lastModified: getCurrentDateTime(),
-    };
+    const edit = dialog.dataset.edit;
+    documents = JSON.parse(localStorage.getItem("documents")) || [];
 
-    documents = JSON.parse(localStorage.getItem("documents"));
-    documents.push(newDoc);
+    if (edit) {
+        const index = documents.findIndex((doc) => doc.name === edit);
+        
+        documents[index].name = name;
+        documents[index].status = status;
+        documents[index].lastModified = getCurrentDateTime();
+        
+        delete dialog.dataset.edit;
+    } else {
+        const newDoc = {
+            name: name,
+            status: status,
+            lastModified: getCurrentDateTime(),
+        };
+
+        documents.push(newDoc);
+    }
+
     localStorage.setItem("documents", JSON.stringify(documents));
 
     nameInput.value = "";
@@ -72,7 +90,7 @@ function renderTable(documents) {
     });
 }
 
-renderTable();
+
 
 function getStatus(status) {
     if (status === "needs-signing") {
@@ -142,4 +160,19 @@ document.getElementById("document-table-body").addEventListener("click", (e) => 
 
         renderTable();
     }
+
+    if (e.target.classList.contains("edit-btn")) {
+        const name = e.target.dataset.name;
+
+        const doc = documents.find((doc) => doc.name === name);
+
+        nameInput.value = doc.name;
+        statusInput.value = doc.status;
+        closeBtn.textContent = "Update";
+        addDocumentHeading.textContent = "Edit Document";
+        dialog.dataset.edit = name;
+        dialog.showModal();
+    }
 });
+
+renderTable();
