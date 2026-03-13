@@ -1,39 +1,50 @@
 const openBtn = document.getElementById("addDocumentBtn");
-const dialog = document.getElementById("addDocumentDialog");
+const dialog = <HTMLDialogElement | null>document.getElementById("addDocumentDialog");
 const closeBtn = document.getElementById("closeModalBtn");
 const closeIcon = document.getElementById("closeIcon");
 const addDocumentHeading = document.getElementById("add-document-heading");
-const nameInput = document.querySelector('#addDocumentDialog input[type="text"]');
-const statusInput = document.querySelector("#addDocumentDialog select");
+const nameInput = <HTMLInputElement | null>(
+    document.querySelector('#addDocumentDialog input[type="text"]')
+);
+const statusInput = <HTMLInputElement | null>document.querySelector("#addDocumentDialog select");
 
-openBtn.addEventListener("click", () => {
-    closeBtn.textContent = "Add";
-    addDocumentHeading.textContent = "Add Document";
-    nameInput.value = "";
-    statusInput.value = "";
+interface DocumentModel {
+    name: string;
+    status: string;
+    lastModified: string;
+}
+openBtn?.addEventListener("click", () => {
+    if (closeBtn) closeBtn.textContent = "Add";
 
-    dialog.showModal();
+    if (addDocumentHeading) addDocumentHeading.textContent = "Add Document";
+    if (nameInput) nameInput.value = "";
+    if (statusInput) statusInput.value = "";
+
+    dialog?.showModal();
 });
 
-closeBtn.addEventListener("click", () => {
-    const name = nameInput.value.trim();
-    const status = statusInput.value;
+closeBtn?.addEventListener("click", () => {
+    const name = nameInput?.value.trim();
+    const status = statusInput?.value;
 
     if (!name || !status) {
         alert("Please fill in all fields");
         return;
     }
 
-    const edit = dialog.dataset.edit;
-    documents = JSON.parse(localStorage.getItem("documents")) || [];
+    const edit = dialog?.dataset.edit;
+    const local_documents = localStorage.getItem("documents");
+    let documents: DocumentModel[] = [];
+    if (local_documents) documents = JSON.parse(local_documents) || [];
 
     if (edit) {
         const index = documents.findIndex((doc) => doc.name === edit);
-        
-        documents[index].name = name;
-        documents[index].status = status;
-        documents[index].lastModified = getCurrentDateTime();
-        
+        const doc = documents[index];
+        if (doc) {
+            doc.name = name;
+            doc.status = status;
+            doc.lastModified = getCurrentDateTime();
+        }
         delete dialog.dataset.edit;
     } else {
         const newDoc = {
@@ -47,26 +58,27 @@ closeBtn.addEventListener("click", () => {
 
     localStorage.setItem("documents", JSON.stringify(documents));
 
-    nameInput.value = "";
+    if (nameInput) nameInput.value = "";
     statusInput.value = "";
 
-    dialog.close();
-    renderTable();
+    dialog?.close();
+    renderTable(null);
 });
 
-closeIcon.addEventListener("click", () => {
-    dialog.close();
+closeIcon?.addEventListener("click", () => {
+    dialog?.close();
 });
 
-function renderTable(documents) {
+function renderTable(documents: DocumentModel[] | null) {
     if (!documents) {
-        documents = JSON.parse(localStorage.getItem("documents"));
+        const localDocuments = localStorage.getItem("documents");
+        if (localDocuments) documents = JSON.parse(localDocuments);
     }
 
     const tableBody = document.getElementById("document-table-body");
-    tableBody.innerHTML = "";
+    if (tableBody) tableBody.innerHTML = "";
 
-    documents.forEach((doc) => {
+    documents?.forEach((doc) => {
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
@@ -86,13 +98,11 @@ function renderTable(documents) {
             </td>
         `;
 
-        tableBody.appendChild(tr);
+        tableBody?.appendChild(tr);
     });
 }
 
-
-
-function getStatus(status) {
+function getStatus(status: string) {
     if (status === "needs-signing") {
         return `<span class="need-signing">Needs Signing</span>`;
     } else if (status === "pending") {
@@ -109,23 +119,26 @@ function getStatus(status) {
     }
 }
 
-function getAction(status) {
+function getAction(status: string) {
     if (status === "needs-signing") return "Sign now";
     if (status === "pending") return "Preview";
     if (status === "completed") return "Download PDF";
 }
 
-function formatDateTime(dateTimeStr) {
+function formatDateTime(dateTimeStr: string) {
     const [date, time, meridiem] = dateTimeStr.split(" ");
     return `<p>${date}</p><p>${time} ${meridiem}</p>`;
 }
 
 const searchInput = document.getElementById("search-box");
 
-searchInput.addEventListener("input", (e) => {
-    const query = e.target.value.trim().toLowerCase();
+searchInput?.addEventListener("input", (e) => {
+    const inputElement = e.target as HTMLInputElement;
 
-    const documents = JSON.parse(localStorage.getItem("documents"));
+    const query = inputElement.value.trim().toLowerCase();
+    const localDocuments = localStorage.getItem("documents");
+    let documents: DocumentModel[] = [];
+    if (localDocuments) documents = JSON.parse(localDocuments);
 
     const filterDocuments = documents.filter((doc) => doc.name.toLowerCase().includes(query));
 
@@ -145,34 +158,37 @@ function getCurrentDateTime() {
 
     const [timePart, meridiem] = time.split(" ");
 
-    return `${date} ${timePart} ${meridiem.toLowerCase()}`;
+    return `${date} ${timePart} ${meridiem?.toLowerCase()}`;
 }
 
-document.getElementById("document-table-body").addEventListener("click", (e) => {
-    const documents = JSON.parse(localStorage.getItem("documents")) || [];
+document.getElementById("document-table-body")?.addEventListener("click", (e) => {
+    let localDocuments = localStorage.getItem("documents");
+    let documents: DocumentModel[] = [];
+    if (localDocuments) documents = JSON.parse(localDocuments) || [];
 
-    if (e.target.classList.contains("delete-btn")) {
-        const name = e.target.dataset.name;
+    const inputElement = e.target as HTMLInputElement;
+    if (inputElement.classList.contains("delete-btn")) {
+        const name = inputElement.dataset.name;
 
         const remaining = documents.filter((doc) => doc.name !== name);
 
         localStorage.setItem("documents", JSON.stringify(remaining));
 
-        renderTable();
+        renderTable(null);
     }
 
-    if (e.target.classList.contains("edit-btn")) {
-        const name = e.target.dataset.name;
+    if (inputElement.classList.contains("edit-btn")) {
+        const name = inputElement.dataset.name;
 
         const doc = documents.find((doc) => doc.name === name);
 
-        nameInput.value = doc.name;
-        statusInput.value = doc.status;
-        closeBtn.textContent = "Update";
-        addDocumentHeading.textContent = "Edit Document";
-        dialog.dataset.edit = name;
-        dialog.showModal();
+        if (nameInput) nameInput.value = doc!.name;
+        if (statusInput) statusInput.value = doc!.status;
+        if (closeBtn) closeBtn.textContent = "Update";
+        if (addDocumentHeading) addDocumentHeading.textContent = "Edit Document";
+        if (dialog) dialog.dataset.edit = name;
+        dialog?.showModal();
     }
 });
 
-renderTable();
+renderTable(null);
